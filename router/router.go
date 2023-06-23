@@ -8,7 +8,17 @@ import (
 func Router() *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api/addData", controllers.AddDataHandler).Methods("POST")
+	router.HandleFunc("/api/addNewIssue", controllers.AddDataHandler).Methods("POST")
+	router.HandleFunc("/api/deleteIssue/{id}", controllers.DeleteDataHandler).Methods("DELETE")
+	router.HandleFunc("/api/fetchIssue", controllers.FetchAllDataHandler).Methods("GET")
+	router.HandleFunc("/api/fetchIssue/{id}", controllers.FetchSingleDataHandler).Methods("GET")
+	router.HandleFunc("/api/updateIssue/{id}", controllers.UpdateDataHandler).Methods("PUT")
 
 	return router
 }
+
+// new issue list
+// issue delete
+// issue fetch
+//single issue fetch
+// issue update
