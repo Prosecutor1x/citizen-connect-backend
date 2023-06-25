@@ -13,10 +13,11 @@ type ProblemData struct {
 }
 
 type IssueRaiserDetails struct {
-	IssueRaiserName  string `json:"issue_raiser_name"`
-	IssueRaiserId    string `json:"issue_raiser_id"`
-	IssueRaiserMail  string `json:"issue_raiser_mail"`
-	IssueRaiserPhone string `json:"issue_raiser_phone"`
+	IssueRaiserName         string `json:"issue_raiser_name"`
+	IssueRaiserId           string `json:"issue_raiser_id"`
+	IssueRaiserMail         string `json:"issue_raiser_mail"`
+	IssueRaiserPhone        string `json:"issue_raiser_phone"`
+	IssueRaiserProfilePhoto string `json:"issue_raiser_profile_photo"`
 }
 
 type Comment struct {

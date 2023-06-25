@@ -13,6 +13,8 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/fetchIssue", controllers.FetchAllDataHandler).Methods("GET")
 	router.HandleFunc("/api/fetchIssue/{id}", controllers.FetchSingleDataHandler).Methods("GET")
 	router.HandleFunc("/api/updateIssue/{id}", controllers.UpdateDataHandler).Methods("PUT")
+	router.HandleFunc("/api/sendOtp", controllers.SendOtp).Methods("POST")
+	router.HandleFunc("/api/verifyOtp", controllers.VerifyOtp).Methods("POST")
 
 	return router
 }
