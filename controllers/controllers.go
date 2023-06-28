@@ -7,8 +7,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/Prosecutor1x/citizen-connect-frontend/model"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/twilio/twilio-go"
@@ -167,8 +169,8 @@ func SendOtp(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Send the response
-		w.WriteHeader(http.StatusOK) // Set the HTTP status code
-		w.Write(jsonResponse)        // Write the JSON response to the client
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		w.Write(jsonResponse)                         // Write the JSON response to the client
 		log.Fatal("Error loading .env file")
 	}
 
@@ -283,8 +285,10 @@ func VerifyOtp(w http.ResponseWriter, r *http.Request) {
 	if phone != "" && otp != "" {
 		resp := isCorrectOtp(phone, otp, accountSid, authToken, verificationResponse, serviceResponseParam)
 		if resp == "approved" {
+			jwtToken := generateJWT(phone)
 			response := map[string]interface{}{
-				"message": "Otp verified successfully",
+				"jwtToken": jwtToken,
+				"message":  "Otp verified successfully",
 			}
 			w.WriteHeader(http.StatusOK) // Set the HTTP status code
 			json.NewEncoder(w).Encode(response)
@@ -324,4 +328,31 @@ func isCorrectOtp(phone string, otp string, accountSid string, authToken string,
 	}
 	return *CreateVerificationCheckResp.Status
 
+}
+
+func generateJWT(phone string) string {
+
+	godotenv.Load(".env")
+
+	// Define the secret key used to sign the token
+
+	secretKey := os.Getenv("JWT_SECRET")
+
+	// Create a new token object
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	// Set the claims for the token
+	claims := token.Claims.(jwt.MapClaims)
+	claims["sub"] = phone
+	claims["exp"] = time.Now().Add(time.Hour * 4).Unix() // Token expiration time (1 hour from now)
+
+	// Generate the JWT string
+	tokenString, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		fmt.Println("Error generating token:", err)
+		return "Error"
+	}
+
+	// Print the JWT string
+	return tokenString
 }
