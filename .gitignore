@@ -22,4 +22,4 @@
 go.work
 
 #env file
-.env
+*.env
