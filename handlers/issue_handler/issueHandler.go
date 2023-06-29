@@ -49,6 +49,24 @@ func CreateIssueHandler(w http.ResponseWriter, r *http.Request) {
 	var problem model.ProblemData
 	_ = json.NewDecoder(r.Body).Decode(&problem)
 
+	if problem.IssueName == "" ||
+		problem.IssueDescription == "" ||
+		problem.IssueLocation == "" ||
+		problem.IssueStatus == "" ||
+		problem.IssueRaiser.IssueRaiserName == "" ||
+		problem.IssueRaiser.IssueRaiserId == "" ||
+		problem.IssueRaiser.IssueRaiserMail == "" ||
+		problem.IssueRaiser.IssueRaiserPhone == "" ||
+		problem.IssueRaiser.IssueRaiserProfilePhoto == "" ||
+		problem.IssueDate == "" {
+		response := map[string]interface{}{
+			"message": "Please fill all the fields",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
 	AddOneIssue(problem)
 	json.NewEncoder(w).Encode(problem)
 
@@ -71,6 +89,15 @@ func DeleteIssueHandler(w http.ResponseWriter, r *http.Request) {
 
 	params := mux.Vars(r)
 	issueId := params["id"]
+	if issueId == "" {
+		response := map[string]interface{}{
+			"message": "Please provide correct issue id",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+
+	}
 	DeleteOneIssue(issueId)
 	json.NewEncoder(w).Encode(issueId)
 
@@ -104,6 +131,15 @@ func FetchSingleIssueHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	params := mux.Vars(r)
 	issueId := params["id"]
+	if issueId == "" {
+		response := map[string]interface{}{
+			"message": "Please provide correct issue id",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+
+	}
 	id, _ := primitive.ObjectIDFromHex(issueId)
 	filter := bson.M{"_id": id}
 	var issue bson.M
@@ -133,8 +169,31 @@ func UpdateIssueHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&problem)
 	params := mux.Vars(r)
 	issueId := params["id"]
-	fmt.Println("Issue ID: ", issueId)
-	fmt.Println("Problem: ", problem)
+	if issueId == "" {
+		response := map[string]interface{}{
+			"message": "Please provide correct issue id",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	if problem.IssueName == "" ||
+		problem.IssueDescription == "" ||
+		problem.IssueLocation == "" ||
+		problem.IssueStatus == "" ||
+		problem.IssueRaiser.IssueRaiserName == "" ||
+		problem.IssueRaiser.IssueRaiserId == "" ||
+		problem.IssueRaiser.IssueRaiserMail == "" ||
+		problem.IssueRaiser.IssueRaiserPhone == "" ||
+		problem.IssueRaiser.IssueRaiserProfilePhoto == "" ||
+		problem.IssueDate == "" {
+		response := map[string]interface{}{
+			"message": "Please fill all the fields",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+	}
 	UpdateOneIssue(issueId, problem)
 	json.NewEncoder(w).Encode(issueId)
 }
