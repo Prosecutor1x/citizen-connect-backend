@@ -23,6 +23,7 @@ func Router() *mux.Router {
 
 	// user routes
 	router.HandleFunc("/api/createUser", user_handler.CreateUserHandler).Methods("POST")
+	router.HandleFunc("/api/checkUser", user_handler.CheckUserExist).Methods("POST")
 
 	return router
 }
