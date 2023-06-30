@@ -38,3 +38,7 @@ type UserData struct {
 	UserVerified     bool   `json:"user_verified"`
 	UserIdProof      string `json:"user_id_proof"`
 }
+
+type Phone struct {
+	Phone string `json:"user_phone"`
+}
