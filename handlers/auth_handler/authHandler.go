@@ -16,8 +16,9 @@ import (
 
 func SendOtp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	w.Header().Set("Access-Control-Allow-Methods", "PUT")
-
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	fmt.Println("SendOtp called")
 	err := godotenv.Load(".env.local")
 	if err != nil {
 		// send error to client
@@ -56,6 +57,7 @@ func SendOtp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	phone := requestBody.Phone
+	fmt.Println("Phone: ", phone)
 	if phone != "" {
 		resp, serResp := generateAndSendOtp(accountSid, authToken, phone)
 		if resp == "Error" {

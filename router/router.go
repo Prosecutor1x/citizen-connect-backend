@@ -9,7 +9,6 @@ import (
 
 func Router() *mux.Router {
 	router := mux.NewRouter()
-
 	// issue routes
 	router.HandleFunc("/api/addNewIssue", issue_handler.CreateIssueHandler).Methods("POST")
 	router.HandleFunc("/api/fetchIssue", issue_handler.FetchAllIssueHandler).Methods("GET")
