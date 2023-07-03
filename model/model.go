@@ -1,6 +1,7 @@
 package model
 
 type ProblemData struct {
+	IssueId          string        `bson:"_id"`
 	IssueTitle       string        `json:"issue_name"`
 	IssueType        string        `json:"issue_type"`
 	IssueDescription string        `json:"issue_description"`
@@ -29,7 +30,7 @@ type Comment struct {
 }
 
 type UserData struct {
-	UserId           string `json:"user_id"`
+	UserId           string `bson:"_id"`
 	UserName         string `json:"user_name"`
 	UserEmail        string `json:"user_email"`
 	Gender           string `json:"gender"`
