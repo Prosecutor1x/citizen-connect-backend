@@ -1,15 +1,17 @@
 package model
 
 type ProblemData struct {
-	IssueName        string             `json:"issue_name"`
-	IssueDescription string             `json:"issue_description"`
-	IssueLocation    string             `json:"issue_location"`
-	IssueStatus      string             `json:"issue_status"`
-	IssueRaiser      IssueRaiserDetails `json:"issue_raiser"`
-	IssueDate        string             `json:"issue_date"`
-	IssueImages      []string           `json:"issue_images"`
-	IssueVideos      []string           `json:"issue_videos"`
-	IssueComments    []Comment          `json:"issue_comments"`
+	IssueTitle       string        `json:"issue_name"`
+	IssueType        string        `json:"issue_type"`
+	IssueDescription string        `json:"issue_description"`
+	IssueLevel       string        `json:"issue_level"`
+	IssueLocation    IssueLocation `json:"issue_location"`
+	IssueProgress    string        `json:"issue_progress"`
+	IssueRaiserId    string        `json:"issue_raiser_id"`
+	IssueDate        string        `json:"issue_date"`
+	IssueImages      []string      `json:"issue_images"`
+	IssueVideos      []string      `json:"issue_videos"`
+	IssueComments    []Comment     `json:"issue_comments"`
 }
 
 type IssueRaiserDetails struct {
@@ -41,4 +43,9 @@ type UserData struct {
 
 type Phone struct {
 	Phone string `json:"user_phone"`
+}
+
+type IssueLocation struct {
+	Lag  string `json:"lag"`
+	Long string `json:"long"`
 }
