@@ -49,15 +49,12 @@ func CreateIssueHandler(w http.ResponseWriter, r *http.Request) {
 	var problem model.ProblemData
 	_ = json.NewDecoder(r.Body).Decode(&problem)
 
-	if problem.IssueName == "" ||
+	if problem.IssueTitle == "" ||
 		problem.IssueDescription == "" ||
-		problem.IssueLocation == "" ||
-		problem.IssueStatus == "" ||
-		problem.IssueRaiser.IssueRaiserName == "" ||
-		problem.IssueRaiser.IssueRaiserId == "" ||
-		problem.IssueRaiser.IssueRaiserMail == "" ||
-		problem.IssueRaiser.IssueRaiserPhone == "" ||
-		problem.IssueRaiser.IssueRaiserProfilePhoto == "" ||
+		problem.IssueLocation.Lag == "" ||
+		problem.IssueLocation.Long == "" ||
+		problem.IssueProgress == "" ||
+		problem.IssueRaiserId == "" ||
 		problem.IssueDate == "" {
 		response := map[string]interface{}{
 			"message": "Please fill all the fields",
@@ -177,15 +174,12 @@ func UpdateIssueHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-	if problem.IssueName == "" ||
+	if problem.IssueTitle == "" ||
 		problem.IssueDescription == "" ||
-		problem.IssueLocation == "" ||
-		problem.IssueStatus == "" ||
-		problem.IssueRaiser.IssueRaiserName == "" ||
-		problem.IssueRaiser.IssueRaiserId == "" ||
-		problem.IssueRaiser.IssueRaiserMail == "" ||
-		problem.IssueRaiser.IssueRaiserPhone == "" ||
-		problem.IssueRaiser.IssueRaiserProfilePhoto == "" ||
+		problem.IssueLocation.Long == "" ||
+		problem.IssueLocation.Lag == "" ||
+		problem.IssueProgress == "" ||
+		problem.IssueRaiserId == "" ||
 		problem.IssueDate == "" {
 		response := map[string]interface{}{
 			"message": "Please fill all the fields",
