@@ -65,6 +65,7 @@ func CheckUserExist(w http.ResponseWriter, r *http.Request) {
 	var result model.UserData
 
 	err := collection.FindOne(context.Background(), filter).Decode(&result)
+	fmt.Println("result", result)
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
