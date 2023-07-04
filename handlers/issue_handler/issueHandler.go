@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 
 	"github.com/Prosecutor1x/citizen-connect-frontend/database"
@@ -15,8 +16,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-const dbName = "problems-list"
+const dbName = "problems_list"
 const colName = "problem"
+var nan = math.NaN()
+
 
 var collection *mongo.Collection
 
@@ -51,8 +54,8 @@ func CreateIssueHandler(w http.ResponseWriter, r *http.Request) {
 
 	if problem.IssueTitle == "" ||
 		problem.IssueDescription == "" ||
-		problem.IssueLocation.Lag == "" ||
-		problem.IssueLocation.Long == "" ||
+		problem.IssueLocation.Lat == nan ||
+		problem.IssueLocation.Long == nan ||
 		problem.IssueProgress == "" ||
 		problem.IssueRaiserId == "" ||
 		problem.IssueDate == "" {
@@ -176,8 +179,8 @@ func UpdateIssueHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if problem.IssueTitle == "" ||
 		problem.IssueDescription == "" ||
-		problem.IssueLocation.Long == "" ||
-		problem.IssueLocation.Lag == "" ||
+		problem.IssueLocation.Long == nan ||
+		problem.IssueLocation.Lat == nan ||
 		problem.IssueProgress == "" ||
 		problem.IssueRaiserId == "" ||
 		problem.IssueDate == "" {

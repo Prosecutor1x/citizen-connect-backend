@@ -1,7 +1,7 @@
 package model
 
 type ProblemData struct {
-	IssueId          string        `bson:"_id"`
+	// IssueId          string        `bson:"_id"`
 	IssueTitle       string        `json:"issue_name"`
 	IssueType        string        `json:"issue_type"`
 	IssueDescription string        `json:"issue_description"`
@@ -26,11 +26,11 @@ type IssueRaiserDetails struct {
 type Comment struct {
 	Body        string             `json:"body"`
 	IssueRaiser IssueRaiserDetails `json:"issue_raiser"`
-	IssueType   string             `json:"issue_type"`
+	CommentType   string           `json:"issue_type"`
 }
 
 type UserData struct {
-	UserId           string `bson:"_id"`
+	// UserId           string `bson:"_id"`
 	UserName         string `json:"user_name"`
 	UserEmail        string `json:"user_email"`
 	Gender           string `json:"gender"`
@@ -47,6 +47,6 @@ type Phone struct {
 }
 
 type IssueLocation struct {
-	Lag  string `json:"lag"`
-	Long string `json:"long"`
+	Lat  float64 `json:"lat"`
+	Long float64 `json:"long"`
 }

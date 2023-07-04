@@ -62,7 +62,7 @@ func CheckUserExist(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&phone)
 	filter := bson.M{"userphone": phone.Phone}
 
-	var result model.UserData
+	var result bson.M
 
 	err := collection.FindOne(context.Background(), filter).Decode(&result)
 	fmt.Println("result", result)
