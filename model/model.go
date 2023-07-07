@@ -24,9 +24,9 @@ type IssueRaiserDetails struct {
 }
 
 type Comment struct {
-	Body        string             `json:"body"`
-	IssueRaiser IssueRaiserDetails `json:"issue_raiser"`
-	CommentType   string           `json:"issue_type"`
+	Body        string   `json:"body"`
+	UserName    UserData `json:"user_name"`
+	CommentType string   `json:"issue_type"`
 }
 
 type UserData struct {
