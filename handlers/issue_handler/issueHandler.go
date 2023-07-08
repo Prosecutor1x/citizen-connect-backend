@@ -194,3 +194,36 @@ func UpdateIssueHandler(w http.ResponseWriter, r *http.Request) {
 	UpdateOneIssue(issueId, problem)
 	json.NewEncoder(w).Encode(issueId)
 }
+
+
+func FetchAllUserIssuesHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	json.NewEncoder(w).Encode(GetAllIssue())
+}
+
+func FetchAllUserIssueHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	params := mux.Vars(r)
+	issueId := params["id"]
+	if issueId == "" {
+		response := map[string]interface{}{
+			"message": "Please provide correct issue id",
+		}
+		w.WriteHeader(http.StatusInternalServerError) // Set the HTTP status code
+		json.NewEncoder(w).Encode(response)
+		return
+
+	}
+	id, _ := primitive.ObjectIDFromHex(issueId)
+	filter := bson.M{"issue_raiser_id": id}
+	var issue bson.M
+	err := collection.FindOne(context.Background(), filter).Decode(&issue)
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.NewEncoder(w).Encode(issue)
+}
+
+
+
+

@@ -14,6 +14,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/fetchIssue", issue_handler.FetchAllIssueHandler).Methods("GET")
 	router.HandleFunc("/api/deleteIssue/{id}", issue_handler.DeleteIssueHandler).Methods("DELETE")
 	router.HandleFunc("/api/fetchIssue/{id}", issue_handler.FetchSingleIssueHandler).Methods("GET")
+	router.HandleFunc("/api/fetchIssues/{id}", issue_handler.FetchAllUserIssuesHandler).Methods("GET")
 	router.HandleFunc("/api/updateIssue/{id}", issue_handler.UpdateIssueHandler).Methods("PUT")
 
 	//auth routes
